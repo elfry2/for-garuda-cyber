@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	</head>
+	<body>
+		<input type="text" id="input" autofocus>
+		<p id="output">M denotes a decrease; N increase.</p>
+		<script>
+
+			// Cache the DOM elements.
+			input = $("#input");
+			output = $("#output");
+
+			input.on("input", function() {
+
+				// Clear output.
+				output.html('');
+
+				lowerCasedInput = input.val().toLowerCase();
+
+				error = false;
+
+				// Check whether there's any character other than m or n.
+				regEx = /[^mn]/g;
+
+				if(regEx.test(lowerCasedInput)) {
+					
+					output.text("Only M & Ns.");
+
+					error = true;
+				}
+
+				// Check whether input length is greather than 8.
+				maxInputLength = 8;
+
+				if(lowerCasedInput.length > maxInputLength) {
+					
+					output.text("8 characters max.");
+
+					input.val('');
+
+					error = true;
+				}
+
+				// Abort execution if input doesn't pass validation.
+				if(error) return;
+
+				sequence = subsequence = '';
+
+				for(i = -1; i < lowerCasedInput.length; i++) {
+					
+					next = lowerCasedInput[i + 1];
+					digit = 1;
+
+					// Increment until a digit which isn't found in sequence or
+					// subsequence is found.
+					while(sequence.includes(digit) 
+					|| subsequence.includes(digit)
+					) digit++;
+						
+					// If the next character is m, store current digit at the beginning
+					// of subsequence.
+					if(next == 'm')	subsequence = digit + subsequence;
+
+					else {
+						// Else put it into sequence right away, then append the content
+						// of subsequence even if empty.
+						sequence += digit + subsequence;
+
+						// Finally, reinitiate subsequence.
+						subsequence = '';
+					}
+
+					console.log([sequence, subsequence]);
+				};
+
+				output.text(sequence);
+			});
+		</script>
+	</body>
+</html>
