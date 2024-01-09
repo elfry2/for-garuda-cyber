@@ -1,7 +1,6 @@
 # for-garuda-cyber 
 The whole root directory is an answer to #2. The rest is in [answers/](answers/).
 
-![A screenshot of task list](public/images/screenshot.png "A screenshot of task list")
 ## Installation
 Create a database, copy the ```.env.example``` file and rename it to ```.env```, edit the ```.env``` file to match your environment configuration, then execute 
 ```bash
