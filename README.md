@@ -1,5 +1,5 @@
-# todo
-A to-do list app written in Laravel 10, which I use as a template for my other Laravel projects. Work in progress.
+# for-garuda-cyber 
+The whole root directory is an answer to #2. The rest is in (answer/)[answer/].
 
 ![A screenshot of task list](public/images/screenshot.png "A screenshot of task list")
 ## Installation
