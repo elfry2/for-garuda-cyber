@@ -1,5 +1,5 @@
 # for-garuda-cyber 
-The whole root directory is an answer to #2. The rest is in (answer/)[answer/].
+The whole root directory is an answer to #2. The rest is in [answer/](answer/).
 
 ![A screenshot of task list](public/images/screenshot.png "A screenshot of task list")
 ## Installation
