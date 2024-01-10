@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use App\Models\Voucher;
@@ -68,7 +69,7 @@ class VoucherController extends Controller
             ]
         );
 
-        $voucherNumber = (int) ($purchase->price / $item->price);
+        $voucherNumber = (int) (($purchase->tenant->price * $purchase->quantity) / $item->price);
 
         TenantPurchase::where('id', $purchase->id)
             ->update(['is_used' => true]);

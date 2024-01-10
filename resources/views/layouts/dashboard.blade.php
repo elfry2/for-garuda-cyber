@@ -38,7 +38,7 @@
                                 <a href="{{ route('vouchers.index') }}"
                                     class="list-group-item list-group-item-action border-0 @if (Route::is('users.*')) bg-body-secondary rounded @endif"><i
                                         class="bi-card-heading"></i><span class="ms-2">Vouchers</span></a>
-                                <a href="{{ route('users.index') }}"
+                                <a href="{{ route('myVouchers.index') }}"
                                     class="list-group-item list-group-item-action border-0 @if (Route::is('users.*')) bg-body-secondary rounded @endif"><i
                                         class="bi-person-vcard"></i><span class="ms-2">My Vouchers</span></a>
                             <form action="{{ route('preference.store') }}" method="post">

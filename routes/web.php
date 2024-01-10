@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\FolderController;
 use App\Http\Controllers\TenantController;
 use App\Http\Controllers\VoucherController;
+use App\Http\Controllers\MyVoucherController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -66,6 +67,9 @@ Route::middleware(['auth', 'notSuspended'])->group(function () {
     Route::post('vouchers/{voucher}/buy', [VoucherController::class, 'buy'])->name('vouchers.buy');
     Route::get('vouchers/purchase-success/{uuid}', [VoucherController::class, 'purchaseSuccess'])->name('vouchers.purchaseSuccess');
     Route::get('vouchers/{voucher}/upload-invoice', [VoucherController::class, 'uploadInvoice'])->name('vouchers.uploadInvoice');
+
+    Route::get('my-vouchers', [MyVoucherController::class, 'index'])->name('myVouchers.index');
+    Route::get('my-vouchers/search', [MyVoucherController::class, 'search'])->name('my-vouchers.search');
 
     Route::middleware('admin')->group(function() {
         Route::get('users/{user}/deleteAvatar', [RegisteredUserController::class, 'deleteAvatar'])->name('users.deleteAvatar');
