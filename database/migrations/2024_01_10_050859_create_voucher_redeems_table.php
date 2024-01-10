@@ -14,6 +14,9 @@ return new class extends Migration
         Schema::create('voucher_redeems', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('uuid')->unique();
+            $table->foreignId('user_id')->constrained();
+            $table->foreignId('voucher_id')->constrained();
         });
     }
 

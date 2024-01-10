@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained();
             $table->foreignId('tenant_id')->constrained();
             $table->integer('quantity');
+            $table->boolean('is_used')->default(false);
         });
     }
 

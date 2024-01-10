@@ -19,7 +19,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ $item->name }}</h5>
                         <p class="card-text"><small class="text-body-secondary">Get one per Rp. {{ $item->price }} spent on tenants.</small></p>
-                        <a class="btn btn-success" href="{{ route("$resource.uploadInvoice", [Str::singular($resource) => $item]) }}">Redeem</a>
+                        <a class="btn btn-success" href="{{ route("$resource.uploadInvoice", [Str::singular($resource) => $item]) . '?back=' . route("$resource.index") }}">Redeem</a>
                     </div>
                 </div>
             </div>

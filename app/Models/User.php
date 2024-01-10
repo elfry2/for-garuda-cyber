@@ -53,4 +53,8 @@ class User extends Authenticatable
     public function preferences() {
         return $this->hasMany(Preference::class);
     }
+
+    public function vouchers() {
+        return $this->hasMany(Voucher::class);
+    }
 }
