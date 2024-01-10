@@ -4,7 +4,8 @@ use App\Http\Controllers\PreferenceController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\FolderController;
-use App\Http\Controllers\TaskController;
+use App\Http\Controllers\TenantController;
+use App\Http\Controllers\VoucherController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,12 +21,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     // return view('welcome');
-    return view('home.index');
-})->name('home.index');
+    // return view('home.index');
+    // })->name('home.index');
+    return redirect()->route('login');
+})->name('home.index');;
+
 
 Route::get('/dashboard', function () {
     // return view('dashboard');
-    return redirect(route('tasks.index'));
+    // return redirect(route('tasks.index'));
+    return redirect()->route('tenants.index');
 })->middleware(['auth', 'verified', 'notSuspended'])->name('dashboard');
 
 Route::get('register', [RegisteredUserController::class, 'create'])
@@ -50,17 +55,18 @@ Route::get('/account-suspended', function () {
 })->middleware('auth')->name('account-suspended');
 
 Route::middleware(['auth', 'notSuspended'])->group(function () {
-    Route::get('folders/{folder}/delete', [FolderController::class, 'delete'])->name('folders.delete');
-    Route::get('folders/preferences', [FolderController::class, 'preferences'])->name('folders.preferences');
-    Route::post('folders/preferences', [FolderController::class, 'applyPreferences'])->name('folders.applyPreferences');
-    Route::resource('folders', FolderController::class)->except(['index', 'show']);
-    
-    Route::get('tasks/{task}/delete', [TaskController::class, 'delete'])->name('tasks.delete');
-    Route::get('tasks/search', [TaskController::class, 'search'])->name('tasks.search');
-    Route::get('tasks/preferences', [TaskController::class, 'preferences'])->name('tasks.preferences');
-    Route::post('tasks/preferences', [TaskController::class, 'applyPreferences'])->name('tasks.applyPreferences');
-    Route::resource('tasks', TaskController::class);
-    
+    Route::resource('tenants', TenantController::class)->only('index');
+    Route::get('tenants/search', [TenantController::class, 'search'])->name('tenants.search');
+    Route::post('tenants/{tenant}/buy', [TenantController::class, 'buy'])->name('tenants.buy');
+    Route::get('tenants/purchase-success/{uuid}', [TenantController::class, 'purchaseSuccess'])->name('tenants.purchaseSuccess');
+    Route::get('tenants/purchase-success/{uuid}/download', [TenantController::class, 'downloadInvoice'])->name('tenants.downloadInvoice');
+
+    Route::resource('vouchers', VoucherController::class)->only('index');
+    Route::get('vouchers/search', [VoucherController::class, 'search'])->name('vouchers.search');
+    Route::post('vouchers/{voucher}/buy', [VoucherController::class, 'buy'])->name('vouchers.buy');
+    Route::get('vouchers/purchase-success/{uuid}', [VoucherController::class, 'purchaseSuccess'])->name('vouchers.purchaseSuccess');
+    Route::get('vouchers/{voucher}/upload-invoice', [VoucherController::class, 'uploadInvoice'])->name('vouchers.uploadInvoice');
+
     Route::middleware('admin')->group(function() {
         Route::get('users/{user}/deleteAvatar', [RegisteredUserController::class, 'deleteAvatar'])->name('users.deleteAvatar');
         Route::post('users/{user}/destroyAvatar', [RegisteredUserController::class, 'destroyAvatar'])->name('users.destroyAvatar');

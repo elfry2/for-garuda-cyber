@@ -11,15 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tasks', function (Blueprint $table) {
+        Schema::create('voucher_redeems', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('title');
-            $table->text('content');
-            $table->timestamp('due_date');
-            $table->boolean('is_completed');
-            $table->foreignId('user_id')->constrained();
-            $table->foreignId('folder_id')->nullable()->constrained();
         });
     }
 
@@ -28,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tasks');
+        Schema::dropIfExists('voucher_redeems');
     }
 };

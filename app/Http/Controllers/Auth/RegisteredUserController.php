@@ -78,19 +78,12 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $isByAdmin = Auth::id() && (Auth::user()->role->name == 'Administrator');
-
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'username' => 'required|alpha_num:ascii|max:255|unique:users',
             'avatar' => 'nullable|image|max:10240',
-            'role_id' => [
-                'integer',
-                'exists:roles,id',
-                Rule::requiredIf(fn () => $isByAdmin)
-            ],
         ]);
 
         $avatarPath = null;
@@ -100,10 +93,6 @@ class RegisteredUserController extends Controller
         }
 
         $roleId = Role::where('name', 'Standard User')->first()->id;
-
-        if ($isByAdmin) {
-            $roleId = $request->role_id;
-        }
 
         $primary = User::create([
             'name' => $request->name,
@@ -115,13 +104,6 @@ class RegisteredUserController extends Controller
         ]);
 
         event(new Registered($primary));
-
-        if ($isByAdmin)
-            return redirect(route(self::resource . '.index'))
-                ->with('message', (object) [
-                    'type' => 'success',
-                    'content' => str(self::resource)->singular()->title() . ' created.'
-                ]);
 
         Auth::login($primary);
 

@@ -29,63 +29,18 @@
                         </h5>
                         <div class="btn invisible"><i class="bi-moon"></i></div>
                     </div>
-                    <div class="mt-2">
-                        <div class="d-flex align-items-center">
-                            <b>Folders</b>
-                            <a href="{{ route('folders.create') }}" class="ms-auto btn" title="Create new folder"><i
-                                    class="bi-plus-lg"></i></a>
-                        </div>
-                        <div class="list-group">
-                            <form action="{{ route('preference.store') }}" method="post">
-                                @csrf
-                                <input type="hidden" name="redirectTo" value="{{ route('tasks.index') }}">
-                                <input type="hidden" name="key" value="currentFolderId">
-                                <button type="submit" name="value" value="" title="The default folder"
-                                    class="list-group-item list-group-item-action border-0 rounded @if (Route::is('tasks.*') && empty(preference('currentFolderId'))) bg-body-secondary @endif">General</button>
-                            </form>
-                            @foreach ((new \App\Models\Folder())->where('user_id', Auth::id())->orderBy('name', 'ASC')->get() as $item)
-                                <form action="{{ route('preference.store') }}" method="post">
-                                    @csrf
-                                    <input type="hidden" name="redirectTo" value="{{ route('tasks.index') }}">
-                                    <input type="hidden" name="key" value="currentFolderId">
-                                    <button type="submit" name="value" value="{{ $item->id }}"
-                                        title="{{ $item->description ?? '' }}"
-                                        class="list-group-item list-group-item-action border-0 py-0 pe-0 rounded @if (Route::is('tasks.*') && preference('currentFolderId') == $item->id) bg-body-secondary @endif">
-                                        <div class="d-flex align-items-center">
-                                            <span class="flex-grow-1">{{ $item->name }}</span>
-                                            <div class="dropdown">
-                                                <a href="#" class="btn" data-bs-toggle="dropdown">
-                                                    <i class="bi-three-dots-vertical"></i>
-                                                </a>
-                                                <ul class="dropdown-menu">
-                                                    <li><a class="dropdown-item"
-                                                            href="{{ route('folders.edit', ['folder' => $item, 'back' => request()->fullUrl()]) }}"><i
-                                                                class="bi-pencil-square"></i><span
-                                                                class="ms-2">Edit</span></a></li>
-                                                    <li>
-                                                        <hr class="dropdown-divider">
-                                                    </li>
-                                                    <li><a class="dropdown-item"
-                                                            href="{{ route('folders.delete', ['folder' => $item, 'back' => request()->fullUrl()]) }}"><i
-                                                                class="bi-trash"></i><span
-                                                                class="ms-2">Delete</span></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </button>
-                                </form>
-                            @endforeach
-                        </div>
-                    </div>
                     <div class="mt-3">
                         <b>Application</b>
                         <div class="list-group">
-                            @if (Auth::user()->role->id == 1)
-                                {{-- Administrator role id --}}
+                                <a href="{{ route('tenants.index') }}"
+                                    class="list-group-item list-group-item-action border-0 @if (Route::is('users.*')) bg-body-secondary rounded @endif"><i
+                                        class="bi-box"></i><span class="ms-2">Tenants</span></a>
+                                <a href="{{ route('vouchers.index') }}"
+                                    class="list-group-item list-group-item-action border-0 @if (Route::is('users.*')) bg-body-secondary rounded @endif"><i
+                                        class="bi-card-heading"></i><span class="ms-2">Vouchers</span></a>
                                 <a href="{{ route('users.index') }}"
                                     class="list-group-item list-group-item-action border-0 @if (Route::is('users.*')) bg-body-secondary rounded @endif"><i
-                                        class="bi-people"></i><span class="ms-2">Users</span></a>
-                            @endif
+                                        class="bi-person-vcard"></i><span class="ms-2">My Vouchers</span></a>
                             <form action="{{ route('preference.store') }}" method="post">
                                 @csrf
                                 {{-- <input type="hidden" name="redirectTo" value="{{ url()->current() }}"> --}}

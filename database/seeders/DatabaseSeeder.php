@@ -25,8 +25,8 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             UserSeeder::class,
             PreferenceSeeder::class,
-            FolderSeeder::class,
-            TaskSeeder::class,
+            TenantSeeder::class,
+            VoucherSeeder::class,
         ];
 
         foreach($seeders as $seeder) {
