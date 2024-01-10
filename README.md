@@ -4,7 +4,7 @@ The whole root directory is the answer to #2. The rest is in [answers/](answers/
 ## Installation
 Create a database, copy the ```.env.example``` file and rename it to ```.env```, edit the ```.env``` file to match your environment configuration, then execute 
 ```bash
-composer update && npm install && npm execute build && php artisan migrate:fresh --seed && php artisan key:generate && php artisan storage:link
+composer update && npm install && npm run build && php artisan migrate:fresh --seed && php artisan key:generate && php artisan storage:link
 ```
 ## Usage
 Execute
